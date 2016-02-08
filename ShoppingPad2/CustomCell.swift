@@ -51,7 +51,9 @@ class CustomCell: UITableViewCell{
     
     test.layer.borderWidth = 1.0
     test.layer.masksToBounds = false
-    test.layer.borderColor = UIColor.whiteColor().CGColor
+    test.layer.borderWidth = 1.0
+    test.layer.borderColor  = UIColor.grayColor().CGColor
+//    test.layer.borderColor = UIColor.whiteColor().CGColor
     
     test.layer.cornerRadius =  test.frame.size.height/2
     test.clipsToBounds = true

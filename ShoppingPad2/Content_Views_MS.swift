@@ -39,6 +39,8 @@ class Content_Views_MS: UIViewController, UITableViewDataSource, UITableViewDele
     
     var imagess : UIImage!
     
+    
+     let customeCellObjct: CustomCell = CustomCell()
     @IBAction func searchBarPressed(sender: AnyObject) {
         
         self.resultSearchController = ({
@@ -66,6 +68,7 @@ class Content_Views_MS: UIViewController, UITableViewDataSource, UITableViewDele
         
         //        self.navigationItem.backBarButtonItem?.title = "ACV"
         //        // Do any additional setup after loading the view, typically from a nib.
+        customeCellObjct.createRoundImage(groupPhotoImageView)
         groupPhotoImageView.image = UIImage(named: "hd_nature_wallpaper.jpg")
         //
                 // search Bar
@@ -127,15 +130,9 @@ class Content_Views_MS: UIViewController, UITableViewDataSource, UITableViewDele
         var PersonName = String()
         var profPic = profilepic[indexPath.row]
         var viewCount = totalViews[indexPath.row]
-        cell.profileImage.layer.borderWidth = 1.0
-        cell.profileImage.layer.masksToBounds = false
-        cell.profileImage.layer.borderColor = UIColor.whiteColor().CGColor
-        
-        cell.profileImage.layer.cornerRadius =   cell.profileImage.frame.size.height/2
-        cell.profileImage.clipsToBounds = true
-        cell.profileImage.contentMode = .ScaleAspectFill
-        
-        cell.profileImage.image=UIImage(named :profPic )
+
+            customeCellObjct.createRoundImage(cell.profileImage)
+            cell.profileImage.image=UIImage(named :profPic )
         
         
         //        cell.participantName.text = PersonName  // Uncomment

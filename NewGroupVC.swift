@@ -12,16 +12,12 @@ class NewGroupVC: UIViewController {
 
     @IBOutlet weak var groupImageView: UIImageView!
     @IBOutlet weak var groupDiscriptionTF: UITextField!
+    let customeCellObjct : CustomCell = CustomCell()
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        groupImageView.layer.borderWidth = 1.0
-        groupImageView.layer.masksToBounds = false
-        groupImageView.layer.borderColor = UIColor.whiteColor().CGColor
-        
-        groupImageView.layer.cornerRadius =  groupImageView.frame.size.height/2
-        groupImageView.clipsToBounds = true
-        groupImageView.contentMode = .ScaleAspectFill
+        customeCellObjct.createRoundImage(groupImageView)
+
         groupImageView.image = UIImage(named: "6.jpg")
 
     }

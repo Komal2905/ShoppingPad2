@@ -19,15 +19,9 @@ class Content_Info_VC: UIViewController, UITableViewDataSource,UITableViewDelega
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//let obj1 = CustomCell?()
+
         
-        contentTitleImageView.layer.borderWidth = 1.0
-        contentTitleImageView.layer.masksToBounds = false
-        contentTitleImageView.layer.borderColor = UIColor.whiteColor().CGColor
-        
-        contentTitleImageView.layer.cornerRadius =   contentTitleImageView.frame.size.height/2
-        contentTitleImageView.clipsToBounds = true
-        contentTitleImageView.contentMode = .ScaleAspectFill
+        customeCellObjct.createRoundImage(contentTitleImageView)
         contentTitleImageView.image = UIImage(named: "hd_nature_wallpaper.jpg")
     }
 
@@ -97,13 +91,7 @@ if tableView == participantTable
     //let cell : CustomCell = tableView.dequeueReusableCellWithIdentifier("cell") as! CustomCell
     cell.layer.borderWidth = 1.0
     cell.layer.borderColor = UIColor.grayColor().CGColor
-//    cell.profileImage.layer.borderWidth = 1.0
-//    cell.profileImage.layer.masksToBounds = false
-//    cell.profileImage.layer.borderColor = UIColor.whiteColor().CGColor
-//    
-//    cell.profileImage.layer.cornerRadius =   cell.profileImage.frame.size.height/2
-//    cell.profileImage.clipsToBounds = true
-//    cell.profileImage.contentMode = .ScaleAspectFill
+
        
     customeCellObjct.createRoundImage(cell.profileImage)
    // obj1.createRoundImage(cell.profileImage)
@@ -114,12 +102,6 @@ if tableView == participantTable
     
      return cell
         
-        
-        
-        
-        
-//        let cell : MuteCell = tableView.dequeueReusableCellWithIdentifier("muteCell") as! MuteCell
-//        return cell
         
     }
     
