@@ -40,7 +40,7 @@ class VIewTabVC: UIViewController, UITableViewDelegate, UITableViewDataSource {
             cell.layer.borderColor = UIColor.grayColor().CGColor
 
         
-        customeCellObjct.createRoundImage(cell.ViewTabImageView)
+            customeCellObjct.createRoundImage(cell.ViewTabImageView)
             cell.ViewTabImageView.image = UIImage(named: "6.jpg")
             return cell
         
