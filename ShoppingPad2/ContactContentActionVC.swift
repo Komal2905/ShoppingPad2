@@ -12,14 +12,13 @@ class ContactContentActionVC: UIViewController, UITableViewDataSource, UITableVi
     
     @IBOutlet weak var profilepicImageView: UIImageView!
     var proImg : UIImage!
+    let customeCellObjct: CustomCell = CustomCell()
+    //customeCellObjct.createRoundImage(contentTitleImageView)
     override func viewDidLoad() {
         super.viewDidLoad()
+        customeCellObjct.createRoundImage(profilepicImageView)
+
         
-        profilepicImageView.layer.borderWidth = 1.0
-        profilepicImageView.layer.masksToBounds = false
-        profilepicImageView.layer.borderColor = UIColor.whiteColor().CGColor
-        profilepicImageView.layer.cornerRadius = profilepicImageView.frame.size.width/2
-        profilepicImageView.clipsToBounds = true
         profilepicImageView.image = proImg
         
     }

@@ -10,16 +10,15 @@ import UIKit
 
 class ContactContentView1: UIViewController , UITableViewDataSource, UITableViewDelegate {
     var proImg : UIImage!
-    
+    let customeCellObjct: CustomCell = CustomCell()
+    //customeCellObjct.createRoundImage(contentTitleImageView)
     @IBOutlet weak var abcTemp: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        abcTemp.layer.borderWidth = 1.0
-        abcTemp.layer.masksToBounds = false
-        abcTemp.layer.borderColor = UIColor.whiteColor().CGColor
-        abcTemp.layer.cornerRadius = abcTemp.frame.size.width/2
-        abcTemp.clipsToBounds = true
+        
+        customeCellObjct.createRoundImage(abcTemp)
+
         abcTemp.image = proImg    }
     
     override func didReceiveMemoryWarning() {

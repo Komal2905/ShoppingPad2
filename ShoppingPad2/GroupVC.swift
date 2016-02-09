@@ -10,6 +10,10 @@ import UIKit
 
 class GroupVC: UIViewController, UITableViewDataSource, UITableViewDelegate {
 var contactGroup = ["All Contact", "Coworker","Family","Friend","ICE","United Group"]
+    
+    
+    
+
     override func viewDidLoad() {
         super.viewDidLoad()
 

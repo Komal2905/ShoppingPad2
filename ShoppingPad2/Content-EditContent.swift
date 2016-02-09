@@ -21,6 +21,8 @@ class Content_EditContent: UIViewController {
     @IBOutlet weak var media2ImageView: UIImageView!
     @IBOutlet weak var media2Title: UITextField!
     @IBOutlet weak var media1Title: UITextField!
+    let customeCellObjct: CustomCell = CustomCell()
+   
     override func viewDidLoad() {
         super.viewDidLoad()
 // Setting border for TextField
@@ -60,24 +62,13 @@ class Content_EditContent: UIViewController {
         
         
 // setting Round ImageView
-    editImageView.layer.masksToBounds = false
-    editImageView.layer.borderWidth = 1.0
-    editImageView.layer.borderColor  = UIColor.grayColor().CGColor
-    editImageView.layer.cornerRadius = editImageView.frame.size.height/2
-    //editImageView.image = UIImage(named: "hd_nature_wallpaper.jpg")
-    editImageView.clipsToBounds = true
-    
-    media1ImageView.layer.borderWidth = 1.0
-    media1ImageView.layer.masksToBounds = false
-    media1ImageView.layer.cornerRadius = media1ImageView.frame.size.height/2
-    media1ImageView.layer.borderColor = UIColor.grayColor().CGColor
-    media1ImageView.clipsToBounds = true
+
         
-    media2ImageView.layer.borderWidth = 1.0
-    media2ImageView.layer.masksToBounds = false
-    media2ImageView.layer.cornerRadius = media2ImageView.frame.size.height/2
-    media2ImageView.layer.borderColor = UIColor.grayColor().CGColor
-    media2ImageView.clipsToBounds = true
+         customeCellObjct.createRoundImage(editImageView)
+        
+         customeCellObjct.createRoundImage(media1ImageView)
+        
+         customeCellObjct.createRoundImage(media2ImageView)
     
     }
 
