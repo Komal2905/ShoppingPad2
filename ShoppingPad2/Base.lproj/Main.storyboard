@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="PU4-9y-bSX">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="DrB-7a-fpL">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
@@ -23,7 +23,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-372" y="1283"/>
+            <point key="canvasLocation" x="-508" y="1183"/>
         </scene>
         <!--LoginVC-->
         <scene sceneID="l4U-QK-SSz">
@@ -306,10 +306,22 @@
                     <view key="view" contentMode="scaleToFill" id="u5i-6x-tsd">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Aiw-2u-BcR">
+                                <rect key="frame" x="139" y="144" width="42" height="21"/>
+                                <animations/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <animations/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="contentTittleLable" destination="Aiw-2u-BcR" id="IZG-hQ-LUF"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pVk-vk-yCg" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -493,6 +505,7 @@
                                         <animations/>
                                         <connections>
                                             <outlet property="allMediaLabel" destination="mv6-UV-QsY" id="oRu-mN-tId"/>
+                                            <outlet property="mediaCountLable" destination="R7O-q2-f2X" id="1zf-ZK-z2l"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="customeNotCell" rowHeight="25" id="KJK-cS-lFs" customClass="CustomNotificationCell" customModule="ShoppingPad2" customModuleProvider="target">
@@ -553,6 +566,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                     <connections>
                         <outlet property="contentTitleImageView" destination="DPK-d8-jWG" id="33c-6k-HgT"/>
+                        <outlet property="contentTitleLable" destination="2fi-do-gqF" id="htR-vo-Q9P"/>
                         <outlet property="participantTable" destination="MEE-WW-dM0" id="XEb-Wx-QKb"/>
                         <outlet property="tableView1" destination="VTi-Gf-8Ga" id="LrW-6k-cWD"/>
                     </connections>

@@ -11,6 +11,7 @@ import UIKit
 class MediaViewCell: UITableViewCell {
     @IBOutlet weak var allMediaLabel: UILabel!
 
+    @IBOutlet weak var mediaCountLable: UILabel!
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
