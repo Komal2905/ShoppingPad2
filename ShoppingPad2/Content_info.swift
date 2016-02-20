@@ -135,9 +135,7 @@ public class Content_info//: UIView
         {
             particpantName = (results.stringForColumn("NAME"))!
             print("PARTICIPANT table ", results.stringForColumn("NAME"))
-//            let dbMediaCount : String =  (results.stringForColumn("MEDIACOUNT"))!
-//            print("Content Title", contentTitle)
-//            mediaCount = dbMediaCount
+
         }
         else
         {
