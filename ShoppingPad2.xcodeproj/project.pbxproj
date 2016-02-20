@@ -213,28 +213,35 @@
 			name = FMDB;
 			sourceTree = "<group>";
 		};
-		0A5C05E81C6B098B002C0F5C /* DataModel */ = {
+		0A57474D1C7827A800F67418 /* ShoppingPadService */ = {
 			isa = PBXGroup;
 			children = (
-				0A5C05ED1C6B0A59002C0F5C /* LoginDM.swift */,
-				0A56CC551C74966400299B3D /* Content_info.swift */,
 			);
-			name = DataModel;
+			name = ShoppingPadService;
 			sourceTree = "<group>";
 		};
-		0A5C05E91C6B09A0002C0F5C /* Controller */ = {
+		0A5C05E81C6B098B002C0F5C /* ShoppingPadDataModels */ = {
+			isa = PBXGroup;
+			children = (
+				0A56CC531C74950D00299B3D /* Model.swift */,
+				0A56CC551C74966400299B3D /* Content_info.swift */,
+				0A5C05ED1C6B0A59002C0F5C /* LoginDM.swift */,
+			);
+			name = ShoppingPadDataModels;
+			sourceTree = "<group>";
+		};
+		0A5C05E91C6B09A0002C0F5C /* ShoppingPadController */ = {
 			isa = PBXGroup;
 			children = (
 				0A5C05EB1C6B0A03002C0F5C /* LoginVC.swift */,
 				0A5C05F11C6B185C002C0F5C /* LoginCon.swift */,
 			);
-			name = Controller;
+			name = ShoppingPadController;
 			sourceTree = "<group>";
 		};
 		0A5C05EA1C6B09E1002C0F5C /* Storage */ = {
 			isa = PBXGroup;
 			children = (
-				0A56CC531C74950D00299B3D /* Model.swift */,
 				0A5C05EF1C6B0FC4002C0F5C /* LoginS.swift */,
 			);
 			name = Storage;
@@ -244,13 +251,14 @@
 			isa = PBXGroup;
 			children = (
 				0A56CC511C74943F00299B3D /* libsqlite3.0.tbd */,
-				0A56CC3F1C7493EA00299B3D /* FMDB */,
-				0A5C05EA1C6B09E1002C0F5C /* Storage */,
-				0A5C05E91C6B09A0002C0F5C /* Controller */,
-				0A5C05E81C6B098B002C0F5C /* DataModel */,
-				0AF808181C61D7740014D415 /* CustomFIles */,
-				0AF807DE1C61BA5B0014D415 /* ShoppingPad2 */,
+				0AF807DE1C61BA5B0014D415 /* ShoppingPadViews */,
+				0A5C05E81C6B098B002C0F5C /* ShoppingPadDataModels */,
+				0A5C05E91C6B09A0002C0F5C /* ShoppingPadController */,
+				0A57474D1C7827A800F67418 /* ShoppingPadService */,
 				0AF807F61C61BA5C0014D415 /* ShoppingPad2Tests */,
+				0A56CC3F1C7493EA00299B3D /* FMDB */,
+				0AF808181C61D7740014D415 /* CustomFIles */,
+				0A5C05EA1C6B09E1002C0F5C /* Storage */,
 				0AF808011C61BA5C0014D415 /* ShoppingPad2UITests */,
 				0AF807DD1C61BA5B0014D415 /* Products */,
 			);
@@ -266,7 +274,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		0AF807DE1C61BA5B0014D415 /* ShoppingPad2 */ = {
+		0AF807DE1C61BA5B0014D415 /* ShoppingPadViews */ = {
 			isa = PBXGroup;
 			children = (
 				0AF8083D1C61DF100014D415 /* CustomCell.swift */,
@@ -288,6 +296,7 @@
 				0AF807EE1C61BA5C0014D415 /* Info.plist */,
 				0AF807E61C61BA5B0014D415 /* ShoppingPad2.xcdatamodeld */,
 			);
+			name = ShoppingPadViews;
 			path = ShoppingPad2;
 			sourceTree = "<group>";
 		};

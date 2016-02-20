@@ -25,7 +25,7 @@ class Model : NSObject
         
         let databasePath = "/Users/BridgeLabz/Documents/komal/IOS/SPTEST/ShoppingPad2/ShoppingPad.db"
         //if !filemgr.fileExistsAtPath(databasePath as String) {
-          //  if !(databasePath as String) {
+        //  if !(databasePath as String) {
 
             let DB = FMDatabase(path: databasePath as String)
             print("path ", DB)
