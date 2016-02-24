@@ -10,6 +10,7 @@
 
 import UIKit
 import MessageUI
+
 class Content_Info_VC: UIViewController, UITableViewDataSource,UITableViewDelegate,     MFMessageComposeViewControllerDelegate
 {
 
@@ -17,20 +18,30 @@ class Content_Info_VC: UIViewController, UITableViewDataSource,UITableViewDelega
     @IBOutlet weak var participantTable: UITableView!
     @IBOutlet weak var contentTitleImageView: UIImageView!
     @IBOutlet weak var contentTitleLable: UILabel!
+    
     let customeCellObjct: CustomCell = CustomCell()
     let contentInfoModel: Content_info = Content_info()
-
+    var someArray = [String]()
     var mediaCount : String?
-    var particpantName : String?
-    var participantView : String?
     var contentTitle : String?
-    
-// For Database Path
+    var particpantName : [AnyObject] = []
+    var participantView :[AnyObject] = []
+    var participantStatus :[AnyObject] = []
+    var participantDate : [AnyObject] = []
+    var participant : [AnyObject] = []
+    var urlOfImage : NSData?
+    var testing : String?
+     var partStringArray : [String] = []
+    // For Database Path
     var databasePath = String()
     var path : String?
+    var data: NSData? = nil
+    var imageData : NSData?
+    var imageDataString : String?
     var resultsOfContent = FMResultSet()
     var resultOfParticipant = FMResultSet()
-    
+    var resultOfImageInfo = FMResultSet()
+    var testdB = FMDatabase()
     override func viewDidLoad()
     {
         super.viewDidLoad()
@@ -40,19 +51,28 @@ class Content_Info_VC: UIViewController, UITableViewDataSource,UITableViewDelega
 // Database Creation
         
         databasePath = contentInfoModel.createTable()
-//      contentInfoModel.insertDataInTable(databasePath)
-
-        
+//        contentInfoModel.insertDataInTable(databasePath)
+// Instatiante Content
         resultsOfContent = contentInfoModel.getContentTableValue(databasePath)
         contentTitle = (resultsOfContent.stringForColumn("TITLE"))!
         mediaCount = (resultsOfContent.stringForColumn("MEDIACOUNT"))!
         contentTitleLable.text = contentTitle
-  
-        resultOfParticipant = contentInfoModel.getParticipantName(databasePath)
-        particpantName = (resultOfParticipant.stringForColumn("NAME"))
-        participantView = (resultOfParticipant.stringForColumn("VIEW"))
-    }
+        
+// Instatiante Participant
+        participant = contentInfoModel.getParticipantName(databasePath)
+        particpantName = participant[0] as! [AnyObject]
+        participantView = participant[1] as! [AnyObject]
+        participantStatus = participant[2] as! [AnyObject]
+        participantDate = participant[3] as! [AnyObject]
+ 
 
+// Instatiante ImageInfo
+//        resultOfImageInfo = contentInfoModel.getImageUrl(databasePath)
+//        imageDataString = (resultOfImageInfo.stringForColumn("URL"))
+
+        
+    }
+    
    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -74,7 +94,7 @@ class Content_Info_VC: UIViewController, UITableViewDataSource,UITableViewDelega
         }
        else
         {
-           count = 6
+           count = 3
         }
         
         return count!
@@ -111,17 +131,23 @@ if tableView == tableView1
     
     
 }
+        
 let cell : CustomCell = tableView.dequeueReusableCellWithIdentifier("cell") as! CustomCell
 if tableView == participantTable
 {
     cell.layer.borderWidth = 1.0
     cell.layer.borderColor = UIColor.grayColor().CGColor
     customeCellObjct.createRoundImage(cell.profileImage)
-    cell.profileImage.image = UIImage(named: "1.jpg")
-    cell.participantName.text = particpantName
-    cell.viewsLable.text = participantView
-    return cell
+//    cell.profileImage.image = UIImage(named: "1.jpg")
+//    cell.profileImage.image = UIImage(data: urlOfImage!,scale:1.0)
+//    cell.participantName.text = testingArray[indexPath.row]
+    cell.participantName.text = particpantName[indexPath.row] as? String
+    cell.viewsLable.text = participantView[indexPath.row] as? String
+    cell.status.text = participantStatus[indexPath.row] as? String
+    cell.dateLable.text = participantDate[indexPath.row] as? String
+
     
+    return cell
 }
     
      return cell
@@ -129,9 +155,10 @@ if tableView == participantTable
      }
     
     
-    
-    @IBAction func sendText(sender: UIButton) {
-        if (MFMessageComposeViewController.canSendText()) {
+    @IBAction func sendText(sender: UIButton)
+    {
+        if (MFMessageComposeViewController.canSendText())
+        {
             let controller = MFMessageComposeViewController()
             controller.body = "Message Body"
             controller.recipients = ["9" , "8"]
@@ -154,7 +181,8 @@ if tableView == participantTable
         }
     }
     
-    func messageComposeViewController(controller: MFMessageComposeViewController!, didFinishWithResult result: MessageComposeResult) {
+    func messageComposeViewController(controller: MFMessageComposeViewController!, didFinishWithResult result: MessageComposeResult)
+    {
         //... handle sms screen actions
         self.dismissViewControllerAnimated(true, completion: nil)
     }

@@ -11,17 +11,16 @@ import UIKit
 class CustomCell: UITableViewCell{
     
     @IBOutlet weak var profileImage: UIImageView!
-    
     @IBOutlet weak var participantName: UILabel!
-    
     @IBOutlet weak var viewsLable: UILabel!
+    @IBOutlet weak var status: UILabel!
+    
+    
+    @IBOutlet weak var dateLable: UILabel!
     
     // For COntactConetntcView
-    
-    
     @IBOutlet weak var actionLable: UILabel!
     @IBOutlet weak var openedLabel: UILabel!
-    
     @IBOutlet weak var ViewTabImageView: UIImageView!
     
     // For ViewTab 
