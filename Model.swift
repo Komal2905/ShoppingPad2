@@ -10,36 +10,31 @@ import UIKit
 import CoreData
 import Foundation
 
-class Model : NSObject
+
+private let model = Model()
+
+class Model
     
 {
+    
+// For singleton class
+    static let sharedInstance: Model = {
+        let instance = Model()
+        return instance
+    }()
+// Creating Database on directory
     func createDatabase(nameOfTheDataBase: String  ) ->String
     {
-        
-//        let filemgr = NSFileManager.defaultManager()
-//        let dirPaths = NSSearchPathForDirectoriesInDomains(.DocumentDirectory,
-//            .UserDomainMask, true)
-//        let docsDir = dirPaths[0] as! NSString
-//        let databasePath = docsDir.stringByAppendingPathComponent(
-//            nameOfTheDataBase)
-        
-        let databasePath = "/Users/BridgeLabz/Documents/komal/IOS/SPTEST/ShoppingPad2/ShoppingPad2.db"
-        //if !filemgr.fileExistsAtPath(databasePath as String) {
-        //  if !(databasePath as String) {
-
-            let DB = FMDatabase(path: databasePath as String)
-            print("path ", DB)
-            if DB == nil {
-                print("Error: \(DB.lastErrorMessage())")
-                
-          //  }
-            
-            
+        let databasePath = "/Users/BridgeLabz/Documents/komal/IOS/SPTEST/ShoppingPad2/ShoppingPad2/ShoppingPad.sqlite"
+        let DB = FMDatabase(path: databasePath as String)
+        print("path ", DB)
+        if DB == nil
+        {
+        print("Error: \(DB.lastErrorMessage())")
         }
         
         return databasePath
     }
-    
 }
 
 
