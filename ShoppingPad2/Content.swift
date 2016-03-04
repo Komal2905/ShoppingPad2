@@ -8,7 +8,7 @@
 
 import UIKit
 
-public class Content//: UIView
+public class Content : Model
 {
 
     
@@ -25,12 +25,31 @@ public class Content//: UIView
     var statusArray : [AnyObject] = []
     var v_DateArray : [AnyObject] = []
     var holeArrayofParticipant : [AnyObject] = []
-    
     var imageArray : [AnyObject] = []
     var results = FMResultSet()
     var participantResult = FMResultSet()
     
 
+    var contentid : Int?
+    var modified_at : String?
+    var created_at : String?
+    var syncDateTime: String?
+    var decription :String?
+    var contentLink : String?
+    var imagesLink :String?
+    var display_name : String?
+    var url : String?
+    var title : Int?
+    var contentType : String?
+    
+    public func getDBPath() -> String
+    {
+        let model = Model()
+        databasePath = model.createDatabase("ShoppingPad.sqlite")
+        return databasePath
+    }
+    
+    
     
     
     public func create() -> String
@@ -40,13 +59,12 @@ public class Content//: UIView
         path = databasePath
         print (path!)
         let shoppingPad = FMDatabase(path: databasePath as String)
-        print("path ", shoppingPad)
+
  // If database is open create table
         if shoppingPad.open()
         {
-          
 
-            let createContentTable = "CREATE TABLE IF NOT EXISTS Content (id INT(10) NOT NULL,title VARCHAR(45)NULL,description VARCHAR(200) NULL,type VARCHAR(45) NULL,background_image_path VARCHAR(50) NULL,owner_id INT(10) NULL,created_at DATETIME(10) NULL,modified_at DATETIME(10) NULL,participant_count INT(10) NULL,content_log_id INT(10) NOT NULL,PRIMARY KEY (id))"
+            let createContentTable = "CREATE TABLE IF NOT EXISTS Content (id INT(10) NOT NULL,title VARCHAR(45)NULL,description VARCHAR NULL,type VARCHAR(45) NULL,background_image_path VARCHAR(50) NULL,owner_id INT(10) NULL,created_at DATETIME(10) NULL,modified_at DATETIME(10) NULL,participant_count INT(10) NULL,content_log_id INT(10) NOT NULL,PRIMARY KEY (id))"
             
             let createContent_LogTable = "CREATE TABLE IF NOT EXISTS Content_log (id INT(10) NOT NULL,content_id TINYINT(4) NULL,action_id TINYINT(4) NULL,created_at DATETIME(10) NULL,action_value VARCHAR(45) NULL,PRIMARY KEY (id))"
             
@@ -54,6 +72,7 @@ public class Content//: UIView
             let sql_stmt1 = "CREATE TABLE IF NOT EXISTS PARTICIPANT (ID INTEGER PRIMARY KEY AUTOINCREMENT, NAME VARCHAR(50),VIEW INTEGER, STATUS VARCHAR(50), V_DATE DATETIME(10) NULL)"
             
             let sql_stmt2 = "CREATE TABLE IF NOT EXISTS IMAGEINFO (ID INTEGER PRIMARY KEY AUTOINCREMENT, TITLE TEXT, URL TEXT)"
+            
             
             if !shoppingPad.executeStatements(createContentTable)
             {
@@ -73,7 +92,7 @@ public class Content//: UIView
             {
                 print("Error: \(shoppingPad.lastErrorMessage())")
             }
-            shoppingPad.close()
+        shoppingPad.close()
         }
         else
         {
@@ -81,75 +100,70 @@ public class Content//: UIView
         }
         return databasePath
     }
+   
     
     
-    func createTable(name : String)
+// Insert Into Content Table with JSOn values
+    var testArray = [AnyObject]()
+    func setContentInfo(dataPath : String, jsonObject : NSArray)
     {
-        let model = Model()
-        databasePath = model.createDatabase("ShoppingPad.sqlite")
+        let shoppingPad = FMDatabase(path : dataPath)
+        let resultDictionary = jsonObject[0] as! NSDictionary
         
-        let shoppingPad = FMDatabase(path: databasePath as String)
-        if(shoppingPad.open())
+        contentid = resultDictionary["content_id"] as? Int
+        modified_at = resultDictionary["modified_at"] as? String
+        created_at = resultDictionary["created_at"] as? String
+        syncDateTime = resultDictionary["syncDateTime"] as? String
+        decription = resultDictionary["decription"] as? String
+        contentLink = resultDictionary["contentLink"] as? String
+        imagesLink = resultDictionary["imagesLink"] as? String
+        display_name = resultDictionary["display_name"] as? String
+        url = resultDictionary["url"] as? String
+        title = resultDictionary["title"] as? Int
+        contentType = resultDictionary["contentType"] as? String
+
+        testArray.append(contentid!)
+        testArray.append(contentType!)
+        testArray.append(title!)
+        testArray.append(decription!)
+        testArray.append(display_name!)
+        testArray.append(url!)
+        testArray.append(imagesLink!)
+        testArray.append(contentLink!)
+        testArray.append(syncDateTime!)
+        testArray.append(created_at!)
+        testArray.append(modified_at!)
+
+        if shoppingPad.open()
         {
-            if(shoppingPad.tableExists(name))
+    
+            let insertQuery = "INSERT INTO CONTENTS VALUES(?,?,?,?,?,?,?,?,?,?,?)"
+            
+            let result = shoppingPad.executeUpdate(insertQuery, withArgumentsInArray: testArray)
+            
+            if !result
             {
-                print("table Exist Named :",(name))
+                print("Error: \(shoppingPad.lastErrorMessage())")
             }
             else
             {
-            let createContentTable = "CREATE TABLE \(name) (contentId INT(10) NOT NULL,contentType VARCHAR(45)NULL,title VARCHAR(200) NULL,display_name VARCHAR(45) NULL,description VARCHAR(50) NULL,conetntTags VARCHAR(10) NULL,imageLink VARCHAR(50), contentLink VARCHAR(50), syncDateTime VARCHAR(50))"
-                
-                
-                if !shoppingPad.executeStatements(createContentTable)
-                {
-                    print("Error: \(shoppingPad.lastErrorMessage())")
-                }
-        
+                print("Inserted in Contents Table : Successfull")
             }
-            
-                shoppingPad.close()
+        shoppingPad.close()
         }
         else
         {
             print("Error: \(shoppingPad.lastErrorMessage())")
- 
         }
-    }
-    
-    
-    func isEmptyTable(name:String)->Bool
-    {
-        let model = Model()
-        databasePath = model.createDatabase("ShoppingPad.sqlite")
         
-        let shoppingPad = FMDatabase(path: databasePath as String)
-        var isEmpty = Bool()
-        if(shoppingPad.open())
-        {
-        let checkEmpty = shoppingPad.executeQuery("SELECT COUNT(*) FROM Contents", withArgumentsInArray: [])
-            if checkEmpty.next() {
-                let count = checkEmpty.intForColumnIndex(0)
-                if count > 0
-                {
-                    isEmpty = false
-                } else
-                {
-                    isEmpty = true
-                }
-            } else
-            {
-                print("Database error")
-            }
-            
-            shoppingPad.close()
-        }
-        return isEmpty
     }
+
     
     
 //Insert Data in DB the data
     func insert(dataPath : String)
     {
+    
         let shoppingPad = FMDatabase(path : dataPath)
         print ("datapath User ",dataPath)
         
@@ -194,7 +208,7 @@ public class Content//: UIView
         }
         
     }
-
+    
     
     func delete(dataPath : String)
     {

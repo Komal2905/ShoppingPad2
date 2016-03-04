@@ -4,15 +4,17 @@
 
   },
   "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
-    "04101981B66E318109934C9516F88D824BB96459" : 0,
+    "007F39B1F5ED2BE7AF649C297C2E70CED51553F4" : 0,
     "FF1C2257A4E1C74B1AD31C6BF9377F2E6B8B7911" : 0,
-    "007F39B1F5ED2BE7AF649C297C2E70CED51553F4" : 0
+    "04101981B66E318109934C9516F88D824BB96459" : 0,
+    "67620B5EFA902936DF04070AF595B76AB0333747" : 0
   },
   "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "3098DE68-F1F8-4F51-8CC1-0700C658DB67",
   "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
-    "04101981B66E318109934C9516F88D824BB96459" : "..\/..\/..\/fmdb",
+    "007F39B1F5ED2BE7AF649C297C2E70CED51553F4" : "..",
     "FF1C2257A4E1C74B1AD31C6BF9377F2E6B8B7911" : "ShoppingPad2\/",
-    "007F39B1F5ED2BE7AF649C297C2E70CED51553F4" : ".."
+    "04101981B66E318109934C9516F88D824BB96459" : "..\/..\/..\/fmdb",
+    "67620B5EFA902936DF04070AF595B76AB0333747" : "ShoppingPad2\/Alamofire\/"
   },
   "DVTSourceControlWorkspaceBlueprintNameKey" : "ShoppingPad2",
   "DVTSourceControlWorkspaceBlueprintVersion" : 204,
@@ -27,6 +29,11 @@
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/ccgus\/fmdb.git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "04101981B66E318109934C9516F88D824BB96459"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Alamofire\/Alamofire.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "67620B5EFA902936DF04070AF595B76AB0333747"
     },
     {
       "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/Komal2905\/ShoppingPad2.git",

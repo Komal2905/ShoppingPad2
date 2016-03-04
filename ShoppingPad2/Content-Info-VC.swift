@@ -12,7 +12,7 @@ import UIKit
 import MessageUI
 
 class Content_Info_VC: UIViewController, UITableViewDataSource,UITableViewDelegate,     MFMessageComposeViewControllerDelegate
-{
+    {
 
     @IBOutlet weak var tableView1: UITableView!
     @IBOutlet weak var participantTable: UITableView!
@@ -54,26 +54,62 @@ class Content_Info_VC: UIViewController, UITableViewDataSource,UITableViewDelega
     var testdB = FMDatabase()
     
     var isTableEmpty = Bool()
+    var contentJsonArray : NSArray?
+ 
+
+// get Json form REST
+    func getJasonResult(resultJson : NSArray)
+    {
+        contentJsonArray = resultJson
+        content.setContentInfo("/Users/BridgeLabz/Documents/komal/IOS/SPTEST/ShoppingPad2/ShoppingPad2/ShoppingPad.sqlite", jsonObject: contentJsonArray!)
+    }
+    
+    
+    
+    
     override func viewDidLoad()
     {
         super.viewDidLoad()
-
         customeCellObjct.createRoundImage(contentTitleImageView)
+        
 // Database Creation
 // Create All Table
         databasePath = content.create()
+
 //        databasePath1 = user.create()
 //        databasePath2 = media.create()
         content.createTable("Contents")
+        content.createTable("UserContentView")
+        content.createTable("UserContentViewDetails")
         isTableEmpty = content.isEmptyTable("Contents")
-    if(isTableEmpty)
-    {
-        // Call Service
-        let service : ContentService = ContentService()
-        service.restCall()
-
-    }
         
+// Check table is Empty
+        
+        
+        if((isTableEmpty == content.isEmptyTable("Contents")) == true )
+        {
+            // Call Service
+            let service : ContentService = ContentService()
+            service.get()
+
+        }
+    
+        
+//    if((isTableEmpty == content.isEmptyTable("UserContentView")) == true )
+//    {
+// Call Service
+//        let service : ContentService = ContentService()
+
+//        
+//    }
+//    if((isTableEmpty == content.isEmptyTable("UserContentViewDetails")) == true)
+//    {
+// Call Service
+//        let service : ContentService = ContentService()
+
+        
+//    }
+       
         
 // Insert Into Table
 //        content.insert(databasePath)
@@ -88,22 +124,22 @@ class Content_Info_VC: UIViewController, UITableViewDataSource,UITableViewDelega
         
 //        contentInfoModel.insertDataInTable(databasePath)
         
-// Instatiante Content
-        resultsOfContent = content.getContent(databasePath)
-        contentTitle = (resultsOfContent.stringForColumn("TITLE"))!
-        contentImageName = (resultsOfContent.stringForColumn("background_image_path"))!
-        contentTitleImageView.image = UIImage(named: contentImageName!)
-
+// Instatiante Content-- UNCOmmnet
+//        resultsOfContent = content.getContent(databasePath)
+//        contentTitle = (resultsOfContent.stringForColumn("TITLE"))!
+//        contentImageName = (resultsOfContent.stringForColumn("background_image_path"))!
+//        contentTitleImageView.image = UIImage(named: contentImageName!)
+//        contentTitleLable.text = contentTitle // UNCOmmnet
 
 //        mediaCount = (resultsOfContent.stringForColumn("MEDIACOUNT"))!
-        contentTitleLable.text = contentTitle
+
         
-// Instatiante Participant table
-        participant = content.getParticipantName(databasePath)
-        particpantName = participant[0] as! [AnyObject]
-        participantView = participant[1] as! [AnyObject]
-        participantStatus = participant[2] as! [AnyObject]
-        participantDate = participant[3] as! [AnyObject]
+// Instatiante Participant table -- Uncomment
+//        participant = content.getParticipantName(databasePath)
+//        particpantName = participant[0] as! [AnyObject]
+//        participantView = participant[1] as! [AnyObject]
+//        participantStatus = participant[2] as! [AnyObject]
+//        participantDate = participant[3] as! [AnyObject]
  
 
 // Instatiante ImageInfo
@@ -116,24 +152,29 @@ class Content_Info_VC: UIViewController, UITableViewDataSource,UITableViewDelega
    }
     
    
-    override func didReceiveMemoryWarning() {
+    override func didReceiveMemoryWarning()
+    {
         super.didReceiveMemoryWarning()
         
     }
     
 
-    func numberOfSectionsInTableView(tableView: UITableView) -> Int {
+    func numberOfSectionsInTableView(tableView: UITableView) -> Int
+    {
         return 1
     }
+    
+    
  // Creating 2 table and set its numberofrows
-    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
+    {
         var count:Int?
 
         if tableView == tableView1
         {
             count = 3
         }
-       else
+        else
         {
             count = particpantName.count
         }
@@ -141,9 +182,11 @@ class Content_Info_VC: UIViewController, UITableViewDataSource,UITableViewDelega
         return count!
     }
     
-    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        
-        
+    
+    
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
+    {
         if tableView == tableView1
         {
             if indexPath.row == 0
@@ -180,20 +223,19 @@ class Content_Info_VC: UIViewController, UITableViewDataSource,UITableViewDelega
             cell.layer.borderWidth = 1.0
             cell.layer.borderColor = UIColor.grayColor().CGColor
             customeCellObjct.createRoundImage(cell.profileImage)
-            //    cell.profileImage.image = UIImage(named: resultImageArray[indexPath.row] as! String)
-    
-            //    cell.profileImage.image = resultImageArray[indexPath.row] as! UIImage
-            //    cell.participantName.text = testingArray[indexPath.row]
-            cell.participantName.text = particpantName[indexPath.row] as? String
-            cell.viewsLable.text = participantView[indexPath.row] as? String
-            cell.status.text = participantStatus[indexPath.row] as? String
-            cell.dateLable.text = participantDate[indexPath.row] as? String
+// UNCommnet
+//            cell.participantName.text = particpantName[indexPath.row] as? String
+//            cell.viewsLable.text = participantView[indexPath.row] as? String
+//            cell.status.text = participantStatus[indexPath.row] as? String
+//            cell.dateLable.text = participantDate[indexPath.row] as? String
             return cell
         }
     
      return cell
         
      }
+    
+    
     
  // send messgae ot participant
     @IBAction func sendText(sender: UIButton)
@@ -222,11 +264,18 @@ class Content_Info_VC: UIViewController, UITableViewDataSource,UITableViewDelega
         }
     }
     
+    
+    
     func messageComposeViewController(controller: MFMessageComposeViewController!, didFinishWithResult result: MessageComposeResult)
     {
         //... handle sms screen actions
         self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
+    
+    
+    
+    
     
     
     func restCall()
