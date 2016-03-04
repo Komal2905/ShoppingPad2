@@ -14,9 +14,10 @@ var testArray = NSArray()
 
 class REST : NSObject
 {
-    func get()
+    func get(url : String)
     {
-        let postEndpoint: String =  "http://52.90.50.117:3046/api/v1/content_info"
+//        let postEndpoint: String =  "http://52.90.50.117:3046/api/v1/content_info"
+        let postEndpoint = url
         let session = NSURLSession.sharedSession()
         let url = NSURL(string: postEndpoint)!
         var contentJsonArray : NSArray?
@@ -41,7 +42,17 @@ class REST : NSObject
                     contentJsonArray = try NSJSONSerialization.JSONObjectWithData(data!, options: NSJSONReadingOptions.MutableContainers) as? NSArray
                     
                     print("jsonArray here", contentJsonArray)
-                    Content_Info_VC().getJasonResult(contentJsonArray!)
+                    if(postEndpoint == "http://52.90.50.117:3046/api/v1/content_info")
+                    {
+                    Content_Info_VC().getJasonResultContent(contentJsonArray!)
+                    }
+                    
+                    
+                    if(postEndpoint == "http://52.90.50.117:3046/api/v1/user_content_view")
+                    {
+                        Content_Info_VC().getJasonResultUserContent(contentJsonArray!)
+                    }
+                    
                     // Update the label
 //                    dispatch_async(dispatch_get_main_queue())
 //                        { () -> Void in

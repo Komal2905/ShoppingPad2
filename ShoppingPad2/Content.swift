@@ -27,9 +27,10 @@ public class Content : Model
     var holeArrayofParticipant : [AnyObject] = []
     var imageArray : [AnyObject] = []
     var results = FMResultSet()
+    var contentInfo = FMResultSet()
     var participantResult = FMResultSet()
     
-
+// FOr ContentINFO
     var contentid : Int?
     var modified_at : String?
     var created_at : String?
@@ -41,6 +42,25 @@ public class Content : Model
     var url : String?
     var title : Int?
     var contentType : String?
+    var isInserted : Bool?
+    var contentArray = [AnyObject]()
+    
+    
+// For UserContnetView
+    
+    var userContentId : Int?
+    var userAdminId : Int?
+    var contetId : Int?
+    var userId : Int?
+    var firstName : String?
+    var lastName : String?
+    var email : String?
+    var displayProfile : String?
+    var lastViewedDateTime: String?
+    var numberOfViews : Int?
+    var mobile : String?
+    var userContentArray = [AnyObject]()
+
     
     public func getDBPath() -> String
     {
@@ -104,8 +124,8 @@ public class Content : Model
     
     
 // Insert Into Content Table with JSOn values
-    var testArray = [AnyObject]()
-    func setContentInfo(dataPath : String, jsonObject : NSArray)
+   
+    func setContentInfo(dataPath : String, jsonObject : NSArray) -> Bool
     {
         let shoppingPad = FMDatabase(path : dataPath)
         let resultDictionary = jsonObject[0] as! NSDictionary
@@ -122,32 +142,34 @@ public class Content : Model
         title = resultDictionary["title"] as? Int
         contentType = resultDictionary["contentType"] as? String
 
-        testArray.append(contentid!)
-        testArray.append(contentType!)
-        testArray.append(title!)
-        testArray.append(decription!)
-        testArray.append(display_name!)
-        testArray.append(url!)
-        testArray.append(imagesLink!)
-        testArray.append(contentLink!)
-        testArray.append(syncDateTime!)
-        testArray.append(created_at!)
-        testArray.append(modified_at!)
+        contentArray.append(contentid!)
+        contentArray.append(contentType!)
+        contentArray.append(title!)
+        contentArray.append(decription!)
+        contentArray.append(display_name!)
+        contentArray.append(url!)
+        contentArray.append(imagesLink!)
+        contentArray.append(contentLink!)
+        contentArray.append(syncDateTime!)
+        contentArray.append(created_at!)
+        contentArray.append(modified_at!)
 
         if shoppingPad.open()
         {
     
             let insertQuery = "INSERT INTO CONTENTS VALUES(?,?,?,?,?,?,?,?,?,?,?)"
             
-            let result = shoppingPad.executeUpdate(insertQuery, withArgumentsInArray: testArray)
+            let result = shoppingPad.executeUpdate(insertQuery, withArgumentsInArray: contentArray)
             
             if !result
             {
                 print("Error: \(shoppingPad.lastErrorMessage())")
+                isInserted = false
             }
             else
             {
                 print("Inserted in Contents Table : Successfull")
+                isInserted = true
             }
         shoppingPad.close()
         }
@@ -155,11 +177,132 @@ public class Content : Model
         {
             print("Error: \(shoppingPad.lastErrorMessage())")
         }
-        
+    return isInserted!
     }
 
     
     
+    
+    
+    func getContentInfo(dataPath : String, tableName : String) -> FMResultSet
+    {
+        let shoppingPad = FMDatabase(path : dataPath)
+        
+        if shoppingPad.open()
+        {
+            let querySQL = "SELECT * FROM \(tableName)"
+            
+            contentInfo = shoppingPad.executeQuery(querySQL,
+                withArgumentsInArray: nil)
+            if contentInfo.next() == true
+            {
+                return contentInfo
+            }
+            else
+            {
+                print("No data match in Content table")
+            }
+            shoppingPad.close()
+        }
+        else
+        {
+            print("Error: \(shoppingPad.lastErrorMessage())")
+        }
+        
+        return contentInfo
+    }
+    
+    
+    
+    
+    
+    func setUserContentView(dataPath : String, jsonObject : NSArray) -> Bool
+    {
+        let shoppingPad = FMDatabase(path : dataPath)
+        let resultDictionary = jsonObject[0] as! NSDictionary
+        
+        userContentId = resultDictionary["userContentId"] as? Int
+        userAdminId = resultDictionary["userAdminId"] as? Int
+        contetId = resultDictionary["content_id"] as? Int
+        userId = resultDictionary["userId"] as? Int
+        firstName = resultDictionary["firstName"] as? String
+        lastName = resultDictionary["lastName"] as? String
+        email = resultDictionary["email"] as? String
+        displayProfile = resultDictionary["displayProfile"] as? String
+        lastViewedDateTime = resultDictionary["lastViewedDateTime"] as? String
+        numberOfViews = resultDictionary["numberOfViews"] as? Int
+        mobile = resultDictionary["mobile"] as? String
+        
+        userContentArray.append(userContentId!)
+        userContentArray.append(userAdminId!)
+        userContentArray.append(contetId!)
+        userContentArray.append(userId!)
+        userContentArray.append(firstName!)
+        userContentArray.append(lastName!)
+        userContentArray.append(email!)
+        userContentArray.append(displayProfile!)
+        userContentArray.append(lastViewedDateTime!)
+        userContentArray.append(numberOfViews!)
+        userContentArray.append(mobile!)
+        
+        if shoppingPad.open()
+        {
+            let insertQuery = "INSERT INTO UserContentView VALUES(?,?,?,?,?,?,?,?,?,?,?)"
+            
+            let result = shoppingPad.executeUpdate(insertQuery, withArgumentsInArray: userContentArray)
+            
+            if !result
+            {
+                print("Error: \(shoppingPad.lastErrorMessage())")
+                isInserted = false
+            }
+            else
+            {
+                print("Inserted in UserContnet Table : Successfull")
+                isInserted = true
+            }
+
+        shoppingPad.close()
+        }
+        else
+        {
+            print("Error: \(shoppingPad.lastErrorMessage())")
+            isInserted = true
+        }
+        return isInserted!
+    }
+    
+    
+    
+    func getUserContent(dataPath : String, tableName : String) -> FMResultSet
+    {
+        let shoppingPad = FMDatabase(path : dataPath)
+        
+        if shoppingPad.open()
+        {
+            let querySQL = "SELECT * FROM \(tableName)"
+            
+            contentInfo = shoppingPad.executeQuery(querySQL,
+                withArgumentsInArray: nil)
+            if contentInfo.next() == true
+            {
+                return contentInfo
+            }
+            else
+            {
+                print("No data match in Content table")
+            }
+            shoppingPad.close()
+        }
+        else
+        {
+            print("Error: \(shoppingPad.lastErrorMessage())")
+        }
+        
+        return contentInfo
+    }
+    
+
 //Insert Data in DB the data
     func insert(dataPath : String)
     {

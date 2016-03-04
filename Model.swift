@@ -13,6 +13,8 @@ import Foundation
 
 private let model = Model()
 var databasePath = String()
+
+var dbInuse = Bool()
 public class Model
 {
     
@@ -33,12 +35,12 @@ public class Model
         {
         print("Error: \(DB.lastErrorMessage())")
         }
-        
+        DB.close()
         return databasePath
     }
     
     
-    
+
     
     func createTable(name : String)
     {
@@ -48,6 +50,7 @@ public class Model
         let shoppingPad = FMDatabase(path: databasePath as String)
         if(shoppingPad.open())
         {
+         
             if(shoppingPad.tableExists(name))
             {
                 print("table Exist Named :",(name))
@@ -72,7 +75,7 @@ public class Model
                 if(name == "UserContentView")
                 {
                     
-                    let createUserContentView = " CREATE TABLE \(name)(userContentId INT NOT NULL,userAdminId INT NULL,contetId INT NULL,userId INT NULL,firstName VARCHAR(45) NULL,lastName VARCHAR(45) NULL,email VARCHAR(45) NULL,displayProfile VARCHAR(45) NULL,lastViewedDateTime DATETIME(45) NULL,numberOfViews INT NULL,PRIMARY KEY (UserContentId))"
+                    let createUserContentView = " CREATE TABLE \(name)(userContentId INT NOT NULL,userAdminId INT NULL,contetId INT NULL,userId INT NULL,firstName VARCHAR(45) NULL,lastName VARCHAR(45) NULL,email VARCHAR(45) NULL,displayProfile VARCHAR(45) NULL,lastViewedDateTime DATETIME(45) NULL,numberOfViews INT NULL,mobile VARCHAR,PRIMARY KEY (UserContentId))"
                     
                     if !shoppingPad.executeStatements(createUserContentView)
                     {
@@ -138,7 +141,7 @@ public class Model
             }
         shoppingPad.close()
         }
-
+        print("ISEMPTY", isEmpty)
         return isEmpty
     }
 

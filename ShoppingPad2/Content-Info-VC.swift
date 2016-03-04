@@ -11,7 +11,7 @@
 import UIKit
 import MessageUI
 
-class Content_Info_VC: UIViewController, UITableViewDataSource,UITableViewDelegate,     MFMessageComposeViewControllerDelegate
+class Content_Info_VC: UIViewController, UITableViewDataSource,UITableViewDelegate,MFMessageComposeViewControllerDelegate
     {
 
     @IBOutlet weak var tableView1: UITableView!
@@ -36,12 +36,20 @@ class Content_Info_VC: UIViewController, UITableViewDataSource,UITableViewDelega
 
     var resultImageArray : [AnyObject] = []
     
+    
+    var p_name : String?
+    var p_lastOpen : String?
+    var p_viewCount : String?
+    
+    
     var urlOfImage : NSData?
     var testing : String?
     var partStringArray : [String] = []
 // For Database Path
     var databasePath = String()
-    var databasePath1 = String()
+    var databasePath1 = "/Users/BridgeLabz/Documents/komal/IOS/SPTEST/ShoppingPad2/ShoppingPad2/ShoppingPad.sqlite"
+    var content_info = "http://52.90.50.117:3046/api/v1/content_info"
+    var user_content_view = "http://52.90.50.117:3046/api/v1/user_content_view"
     var databasePath2 = String()
    
     var path : String?
@@ -53,17 +61,28 @@ class Content_Info_VC: UIViewController, UITableViewDataSource,UITableViewDelega
     var resultOfImageInfo = FMResultSet()
     var testdB = FMDatabase()
     
-    var isTableEmpty = Bool()
+    var contentInfo = FMResultSet()
+    var userContent = FMResultSet()
+    
+    var isContentTableEmpty = Bool()
+    var isUserContentViewEmpty = Bool()
+    var valueInserted = Bool()
     var contentJsonArray : NSArray?
- 
+    var userContentJsonArray : NSArray?
+    var dbInuse = Bool()
 
 // get Json form REST
-    func getJasonResult(resultJson : NSArray)
+    func getJasonResultContent(resultJson : NSArray)
     {
         contentJsonArray = resultJson
-        content.setContentInfo("/Users/BridgeLabz/Documents/komal/IOS/SPTEST/ShoppingPad2/ShoppingPad2/ShoppingPad.sqlite", jsonObject: contentJsonArray!)
+        valueInserted = content.setContentInfo("/Users/BridgeLabz/Documents/komal/IOS/SPTEST/ShoppingPad2/ShoppingPad2/ShoppingPad.sqlite", jsonObject: contentJsonArray!)
     }
     
+    func getJasonResultUserContent(resultJson : NSArray)
+    {
+        userContentJsonArray = resultJson
+        valueInserted = content.setUserContentView("/Users/BridgeLabz/Documents/komal/IOS/SPTEST/ShoppingPad2/ShoppingPad2/ShoppingPad.sqlite", jsonObject: userContentJsonArray!)
+    }
     
     
     
@@ -74,41 +93,56 @@ class Content_Info_VC: UIViewController, UITableViewDataSource,UITableViewDelega
         
 // Database Creation
 // Create All Table
-        databasePath = content.create()
+//        databasePath = content.create()
 
 //        databasePath1 = user.create()
 //        databasePath2 = media.create()
         content.createTable("Contents")
         content.createTable("UserContentView")
         content.createTable("UserContentViewDetails")
-        isTableEmpty = content.isEmptyTable("Contents")
-        
-// Check table is Empty
-        
-        
-        if((isTableEmpty == content.isEmptyTable("Contents")) == true )
+        isContentTableEmpty = content.isEmptyTable("Contents")
+// --** UNCOMMENT FOR CONTENT INFO
+        if(isContentTableEmpty)
         {
             // Call Service
             let service : ContentService = ContentService()
-            service.get()
-
+            service.get(content_info)
+            
         }
-    
         
-//    if((isTableEmpty == content.isEmptyTable("UserContentView")) == true )
-//    {
-// Call Service
-//        let service : ContentService = ContentService()
-
-//        
-//    }
-//    if((isTableEmpty == content.isEmptyTable("UserContentViewDetails")) == true)
-//    {
-// Call Service
-//        let service : ContentService = ContentService()
-
+        else
+        {
+            contentInfo = content.getContentInfo(databasePath1,tableName : "Contents")
+            print("COntentInfoHERE",contentInfo)
+            contentTitle = (contentInfo.stringForColumn("display_name"))!
+            contentTitleLable.text = contentTitle
+            let testURL = (contentInfo.stringForColumn("imageLink"))!
+            let url = NSURL(string: testURL)
+            print("URL",testURL)
+         
+        }
+//
         
-//    }
+ // Check UserCOntentView Table
+        isUserContentViewEmpty = content.isEmptyTable("UserContentView")
+        if(isUserContentViewEmpty)
+        {
+            // Call Service
+            let service : ContentService = ContentService()
+            service.get(user_content_view)
+            
+        }
+            
+        else
+        {
+            userContent = content.getUserContent(databasePath1,tableName : "UserContentView")
+            print("UserContentoHERE",userContent)
+            p_name = (userContent.stringForColumn("firstName"))!
+            print("P_name",p_name)
+            p_viewCount = (userContent.stringForColumn("numberOfViews"))!
+            p_lastOpen = (userContent.stringForColumn("lastViewedDateTime"))!
+        }
+
        
         
 // Insert Into Table
@@ -148,7 +182,7 @@ class Content_Info_VC: UIViewController, UITableViewDataSource,UITableViewDelega
 //        imageDataString = (resultOfImageInfo.stringForColumn("URL"))
 //        contentInfoModel.insertImageData(databasePath)
 
-        resultImageArray = content.getImageInfo(databasePath) as! [UIImage]
+//        resultImageArray = content.getImageInfo(databasePath) as! [UIImage]
    }
     
    
@@ -176,7 +210,7 @@ class Content_Info_VC: UIViewController, UITableViewDataSource,UITableViewDelega
         }
         else
         {
-            count = particpantName.count
+            count = 1
         }
         
         return count!
@@ -224,6 +258,11 @@ class Content_Info_VC: UIViewController, UITableViewDataSource,UITableViewDelega
             cell.layer.borderColor = UIColor.grayColor().CGColor
             customeCellObjct.createRoundImage(cell.profileImage)
 // UNCommnet
+            
+            cell.participantName.text = p_name
+            cell.viewsLable.text = p_viewCount
+            cell.status.text = "Opened"
+            cell.dateLable.text = p_lastOpen
 //            cell.participantName.text = particpantName[indexPath.row] as? String
 //            cell.viewsLable.text = participantView[indexPath.row] as? String
 //            cell.status.text = participantStatus[indexPath.row] as? String
